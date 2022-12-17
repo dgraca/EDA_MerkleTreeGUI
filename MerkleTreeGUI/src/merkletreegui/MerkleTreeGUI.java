@@ -33,7 +33,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
             model.add(i, list.get(i));
         }
         jListElems.setModel(model);        
-        updateMerkleTree();                
+        updateMerkleTree();
     }
     
     /**
@@ -148,11 +148,11 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-        
-        /* TODO: change code to remove one element via its index */
-        
-        // list.remove(jTextFieldElem.getText()); 
-        updateJList();
+        // removes the element if it was selected
+        if (jListElems.getSelectedIndex() >= 0) {
+            tree.removeElement(jListElems.getSelectedIndex());
+            updateJList();   
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     /**
@@ -160,13 +160,11 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        
-        /* TODO: change code to modify one element via its index */
-        
-        ArrayList<String> list = tree.getData();
-        if (jListElems.getSelectedIndex() >= 0 && !list.contains(jTextFieldElem.getText())) {
-            list.set(jListElems.getSelectedIndex(), jTextFieldElem.getText());
+        // changes the element if it was selected
+        if (jListElems.getSelectedIndex() >= 0) {
+            tree.changeElement(jListElems.getSelectedIndex(), jTextFieldElem.getText());
             updateJList();
+            jTextFieldElem.setText("");
         }
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
@@ -177,6 +175,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         tree.addElement(jTextFieldElem.getText());
         updateJList();
+        jTextFieldElem.setText("");
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     /**

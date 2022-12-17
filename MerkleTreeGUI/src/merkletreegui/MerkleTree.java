@@ -25,7 +25,7 @@ public class MerkleTree {
      */
     public MerkleTree() {
         this.data = new ArrayList<>();
-        this.tree = new ArrayList<ArrayList<String>>();
+        this.tree = new ArrayList<>();
     }
 
     public ArrayList<String> getData() {
@@ -111,7 +111,26 @@ public class MerkleTree {
     public void removeElement(int idx) {
         // remove element from data's list
         data.remove(idx);
-        // re-initialize the tree (and re-build's it)
+        
+        // if there are no elements, then the tree must be empty
+        if (data.isEmpty()) {
+            tree.clear();
+            return;
+        }
+        
+        // if there are elements, then we must
+        // re-initialize the tree (and re-build it)
+        initializeTree(data);
+    }
+    
+    /**
+     * Changes one element from the data
+     * Re-initializes tree
+     * @param idx index of the element to be changed
+     * @param elem new element to be added
+     */
+    public void changeElement(int idx, String elem) {
+        data.set(idx, elem);
         initializeTree(data);
     }
 
