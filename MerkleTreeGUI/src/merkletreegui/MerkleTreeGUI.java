@@ -96,6 +96,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         jListElems.setBorder(javax.swing.BorderFactory.createTitledBorder("Elementos"));
         jScrollPane1.setViewportView(jListElems);
 
+        jTextAreaMerkleTree.setEditable(false);
         jTextAreaMerkleTree.setColumns(20);
         jTextAreaMerkleTree.setRows(5);
         jTextAreaMerkleTree.setBorder(javax.swing.BorderFactory.createTitledBorder("MerkleTree"));
