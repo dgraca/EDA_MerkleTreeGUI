@@ -4,12 +4,14 @@ Merkle Tree "Explorer" for the class of EDA (Algorithms and Data Structures)
 
 ## Requirements
 ### Basic solution (up to 14/20)
-- Build a M. tree from elements given by user
-- Add, modify or delete elements
-- View the M. tree in text format
+- Build a M. tree from elements given by user ✔
+- Add, modify or delete elements ✔
+- View the M. tree in text format ✔
+- - View the M. tree aligned to the righ ✔
+- - View the M. tree with dynamic spacings (as triangle) ❌
 
 ### Intermidiate solution (up to 16/20)
-- Basic solution
+- Basic solution ✔
 - Prove that an element belongs to the M. tree
 - Save and/or load a tree from disk
 
