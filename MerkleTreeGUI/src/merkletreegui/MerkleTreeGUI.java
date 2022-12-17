@@ -5,7 +5,6 @@
 package merkletreegui;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -14,7 +13,8 @@ import javax.swing.DefaultListModel;
  */
 public class MerkleTreeGUI extends javax.swing.JFrame {
 
-    private List list = new ArrayList();
+    private final MerkleTree tree = new MerkleTree();
+    
     /**
      * Creates new form MerleTreeGUI
      */
@@ -23,8 +23,12 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         updateJList();
     }
     
+    /**
+     * updates the list with the elements
+     */
     private void updateJList() {
         DefaultListModel model = new DefaultListModel();
+        ArrayList<String> list = tree.getData();
         for (int i = 0; i < list.size(); i++) {
             model.add(i, list.get(i));
         }
@@ -32,10 +36,11 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         updateMerkleTree();                
     }
     
+    /**
+     * updates the merkle tree panel
+     */
     private void updateMerkleTree() {
-        MerkleTree merkleTree = new MerkleTree();
-        merkleTree.initializeTree(list);
-        jTextAreaMerkleTree.setText(merkleTree.toString());
+        jTextAreaMerkleTree.setText(tree.toString());
 //        
 //        List proofList = merkleTree.getProof(jTextFieldNewElem.getText());
 //        jTextFieldProof.setText(proofList.toString());
@@ -121,11 +126,12 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldElem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addComponent(jButtonRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAdicionar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(jButtonRemover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldElem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
@@ -133,28 +139,42 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextFieldElem.getAccessibleContext().setAccessibleName("Elemento");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Removes one element from the merkle tree (and element list)
+     * @param evt 
+     */
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-        // TODO add your handling code here:
-        list.remove(jTextFieldElem.getText());
+        
+        /* TODO: change code to remove one element via its index */
+        
+        // list.remove(jTextFieldElem.getText()); 
         updateJList();
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
+    /**
+     * Modifies one element from the tree
+     * @param evt 
+     */
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        // TODO add your handling code here:
+        
+        /* TODO: change code to modify one element via its index */
+        
+        ArrayList<String> list = tree.getData();
         if (jListElems.getSelectedIndex() >= 0 && !list.contains(jTextFieldElem.getText())) {
             list.set(jListElems.getSelectedIndex(), jTextFieldElem.getText());
             updateJList();
         }
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
+    /**
+     * Add one element into the tree
+     * @param evt 
+     */
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
-        // TODO add your handling code here:
-        list.add(jTextFieldElem.getText());
+        tree.addElement(jTextFieldElem.getText());
         updateJList();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -187,10 +207,8 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MerkleTreeGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MerkleTreeGUI().setVisible(true);
         });
     }
 

@@ -28,6 +28,14 @@ public class MerkleTree {
         this.tree = new ArrayList<ArrayList<String>>();
     }
 
+    public ArrayList<String> getData() {
+        return data;
+    }
+
+    public ArrayList<ArrayList<String>> getTree() {
+        return tree;
+    }
+
     /**
      * Initializes the tree with a list of the raw elements (no hashes)
      * @param elements elements to be hashed into the tree

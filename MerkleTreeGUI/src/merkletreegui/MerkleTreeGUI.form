@@ -49,11 +49,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextFieldElem" alignment="3" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButtonAdicionar" alignment="1" pref="43" max="32767" attributes="0"/>
                   <Component id="jButtonRemover" alignment="1" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="jButtonAlterar" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldElem" alignment="3" max="-2" attributes="0"/>
+                      <Component id="jButtonAlterar" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -77,9 +79,6 @@
           <Color id="Text Cursor"/>
         </Property>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Elemento"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAdicionar">
       <Properties>
