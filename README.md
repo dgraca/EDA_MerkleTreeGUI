@@ -13,7 +13,7 @@ Merkle Tree "Explorer" for the class of EDA (Algorithms and Data Structures)
 ### Intermidiate solution (up to 16/20)
 - Basic solution ✔
 - Prove that an element belongs to the M. tree
-- Save and/or load a tree from disk
+- Save and/or load a tree from disk ✔
 
 ### Advanced solution (up to 18/20)
 - Intermidiate solution
