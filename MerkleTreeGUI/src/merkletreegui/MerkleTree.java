@@ -4,6 +4,7 @@
  */
 package merkletreegui;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author danielgraca
  */
-public class MerkleTree {
+public class MerkleTree implements Serializable{
     // elements of the tree
     private ArrayList<String> data;
     // tree structure (list of lists)

@@ -4,8 +4,19 @@
  */
 package merkletreegui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -13,13 +24,20 @@ import javax.swing.DefaultListModel;
  */
 public class MerkleTreeGUI extends javax.swing.JFrame {
 
-    private final MerkleTree tree = new MerkleTree();
+    private MerkleTree tree = new MerkleTree();
     
     /**
      * Creates new form MerleTreeGUI
      */
     public MerkleTreeGUI() {
         initComponents();
+        jFileChooser1.setSelectedFile(new File("defaultTree.mkt"));
+        
+        try {
+            tree = loadFromFile(new File("defaultTree.mkt"));
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(MerkleTreeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         updateJList();
     }
     
@@ -49,6 +67,18 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
 //        jPanelMerkleTree.repaintMerkleTree(merkleTree);
     }
 
+    public static MerkleTree loadFromFile(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+        try ( ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            return (MerkleTree) in.readObject();
+        }
+    }
+    
+    public void saveToFile(File file) throws FileNotFoundException, IOException {
+        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+            out.writeObject(tree);
+        }        
+    }    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +88,8 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser();
         jTextFieldElem = new javax.swing.JTextField();
         jButtonAdicionar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
@@ -66,6 +98,8 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         jListElems = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaMerkleTree = new javax.swing.JTextArea();
+        jButtonGuardar = new javax.swing.JButton();
+        jButtonLer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +128,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         });
 
         jListElems.setBorder(javax.swing.BorderFactory.createTitledBorder("Elementos"));
+        jListElems.setToolTipText("");
         jScrollPane1.setViewportView(jListElems);
 
         jTextAreaMerkleTree.setEditable(false);
@@ -102,13 +137,27 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         jTextAreaMerkleTree.setBorder(javax.swing.BorderFactory.createTitledBorder("MerkleTree"));
         jScrollPane2.setViewportView(jTextAreaMerkleTree);
 
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+
+        jButtonLer.setText("Ler");
+        jButtonLer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextFieldElem, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -116,23 +165,30 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonRemover)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAlterar))
+                        .addComponent(jButtonAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonLer))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAdicionar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addComponent(jButtonRemover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAdicionar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextFieldElem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAlterar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonLer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
@@ -161,7 +217,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
      */
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // changes the element if it was selected
-        if (jListElems.getSelectedIndex() >= 0) {
+        if (jListElems.getSelectedIndex() >= 0 && !jTextFieldElem.getText().isEmpty()) {
             tree.changeElement(jListElems.getSelectedIndex(), jTextFieldElem.getText());
             updateJList();
             jTextFieldElem.setText("");
@@ -177,6 +233,29 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         updateJList();
         jTextFieldElem.setText("");
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        // TODO add your handling code here:
+        if (jFileChooser1.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                saveToFile(jFileChooser1.getSelectedFile());
+            } catch (IOException ex) {
+                Logger.getLogger(MerkleTreeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLerActionPerformed
+        // TODO add your handling code here:
+        if (jFileChooser1.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                tree = loadFromFile(jFileChooser1.getSelectedFile());
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(MerkleTreeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateJList();
+        }
+    }//GEN-LAST:event_jButtonLerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,7 +294,11 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonAlterar;
+    private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonLer;
     private javax.swing.JButton jButtonRemover;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JList<String> jListElems;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
