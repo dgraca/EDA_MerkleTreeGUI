@@ -6,6 +6,8 @@ Merkle Tree "Explorer" for the class of EDA (Algorithms and Data Structures)
 ### Basic solution (up to 14/20)
 - Build a M. tree from elements given by user ✔
 - Add, modify or delete elements ✔
+- - rebuilding entire tree when adding/modifying/deleting elements ✔
+- - rebuilding tree only the nodes that needs to be changed ❌
 - View the M. tree in text format ✔
 - - View the M. tree aligned to the righ ✔
 - - View the M. tree with dynamic spacings (as triangle) ❌
