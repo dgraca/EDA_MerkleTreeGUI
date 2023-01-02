@@ -29,10 +29,18 @@ public class MerkleTree implements Serializable{
         this.tree = new ArrayList<>();
     }
 
+   /**
+    * 
+    * @return the elements list
+    */
     public ArrayList<String> getData() {
         return data;
     }
 
+    /**
+     *
+     * @return the list of lists (the tree itself)
+     */
     public ArrayList<ArrayList<String>> getTree() {
         return tree;
     }
@@ -77,8 +85,7 @@ public class MerkleTree implements Serializable{
                 hashedData.add(Integer.toString(Math.abs(data.get(i).hashCode()), 16));
             } else {
                 // hash in hexadecimal
-                hash =
-                        Integer.toString(Math.abs(data.get(i).hashCode()), 16) + "" + Integer.toString(Math.abs(data.get(i+1).hashCode()), 16);
+                hash = Integer.toString(Math.abs(data.get(i).hashCode()), 16) + "" + Integer.toString(Math.abs(data.get(i+1).hashCode()), 16);
                 hashedData.add(hash);
             }
         }
@@ -131,8 +138,37 @@ public class MerkleTree implements Serializable{
      * @param elem new element to be added
      */
     public void changeElement(int idx, String elem) {
+        // change the raw element in data list
         data.set(idx, elem);
-        initializeTree(data);
+        // change the first list (of hashes) element
+        tree.get(0).set(idx, Integer.toString(Math.abs(elem.hashCode()), 16));
+        // changes everything else recursively
+        changeElement(getParent(idx), 1);
+    }
+    
+    /**
+     * 
+     * @param idx index of the element to change
+     * @param lvl list in which the value will be changed
+     */
+    public void changeElement(int idx, int lvl) {
+        // stopping condition
+        if (lvl >= tree.size()) return;
+        
+        // get children
+        String leftChild = tree.get(lvl-1).get(getLeftChild(idx));
+        
+        // check if there is right child
+        try {
+            String rightChild = tree.get(lvl-1).get(getRightChild(idx));
+            String newHash = Integer.toString(Math.abs(leftChild.hashCode()), 16) + "" + Integer.toString(Math.abs(rightChild.hashCode()), 16);
+            tree.get(lvl).set(idx, newHash);
+        } catch (Exception e) {
+            String newHash = Integer.toString(Math.abs(leftChild.hashCode()), 16);
+            tree.get(lvl).set(idx, newHash);
+        }
+        
+        changeElement(getParent(idx), lvl+1);
     }
     
     /**
