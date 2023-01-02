@@ -134,15 +134,99 @@ public class MerkleTree implements Serializable{
         data.set(idx, elem);
         initializeTree(data);
     }
-
+    
     /**
-     * Returns the proof of an element with a given index
-     * @param idx index of the element to be proved
-     * @return the proof of the element
+     * 
+     * @param idx index of the element
+     * @return the index of one element parent
      */
-    public String getProof(int idx) {
-
-        return "";
+    public int getParent(int idx) {
+        return idx / 2;
+    }
+    
+    /**
+     * 
+     * @param idx index of the parent
+     * @return the index of one element children (left children)
+     */
+    public int getLeftChild(int idx) {
+        return idx * 2;
+    }
+    
+    /**
+     * 
+     * @param idx index of the parent
+     * @return index of one element childrem (right children)
+     */
+    public int getRightChild(int idx) {
+        return (idx * 2) + 1;
+    }
+    
+    /**
+     * get the proof of a leaf (given its index) as a list
+     *
+     * @param idx index of the element (leaft) we want to prove
+     * @return list of elements that prove a leaf
+     */
+    public List<String> getProof(int idx) {
+        // list of proofs
+        List<String> proof = new ArrayList<>();
+        int lvl = 0;
+        int rightChild;
+        int leftChild;
+        String hash;
+        
+        if (idx % 2 == 0) { // leaf is left node, add right node
+            try {
+                proof.add(tree.get(0).get(idx+1));
+            } catch (Exception e) {
+                proof.add(tree.get(0).get(idx));
+            }
+        } else { // leaf is right node, add left node
+            try {
+                proof.add(tree.get(0).get(idx-1));
+            } catch (Exception e) {
+                proof.add(tree.get(0).get(idx));
+            }
+        }
+        
+        // loop through all tree
+        while (true) {
+            lvl++;
+            
+            // reduce idx
+            if (idx != 0) {
+                idx /= 2;
+            } else if (lvl < tree.get(lvl).size() - 1) {
+                idx++;
+            }
+            
+            // gets parent 
+            int parent = getParent(idx);
+            // gets parent children
+            rightChild = getRightChild(parent);
+            leftChild = getLeftChild(parent);
+            
+            if (idx % 2 == 0) { // if node is left positioned
+                try {
+                    proof.add(tree.get(lvl).get(rightChild));
+                } catch (Exception e) {
+                    proof.add(tree.get(lvl).get(leftChild));
+                }
+            } else { // if node is right positioned
+                try {
+                    proof.add(tree.get(lvl).get(leftChild));
+                } catch (Exception e) {
+                    proof.add(tree.get(lvl).get(leftChild));
+                }
+            }
+            
+            
+            // if the element is root, proof was "found"
+            if (tree.get(lvl).get(idx).equals(getRoot())) {
+                return proof;
+            }
+        }
     }
 
     /**
