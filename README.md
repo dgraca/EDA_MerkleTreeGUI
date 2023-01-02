@@ -9,12 +9,12 @@ Merkle Tree "Explorer" for the class of EDA (Algorithms and Data Structures)
 - - rebuilding entire tree when adding/modifying/deleting elements ✔
 - - rebuilding tree only the nodes that needs to be changed ❌
 - View the M. tree in text format ✔
-- - View the M. tree aligned to the righ ✔
+- - View the M. tree aligned to the right ✔
 - - View the M. tree with dynamic spacings (as triangle) ❌
 
 ### Intermidiate solution (up to 16/20)
 - Basic solution ✔
-- Prove that an element belongs to the M. tree
+- Prove that an element belongs to the M. tree ✔
 - Save and/or load a tree from disk ✔
 
 ### Advanced solution (up to 18/20)
