@@ -52,9 +52,11 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             ListModel<String> model = jListElems.getModel();
-            jTextFieldElem.setText(model.getElementAt(jListElems.getSelectedIndex()));
-            jTextFieldElemProve.setText(model.getElementAt(jListElems.getSelectedIndex()));
-            jTextFieldProof.setText(""+tree.getProof(jListElems.getSelectedIndex()));            
+            if(jListElems.getSelectedIndex() != -1){
+                jTextFieldElem.setText(model.getElementAt(jListElems.getSelectedIndex()));
+                jTextFieldElemProve.setText(model.getElementAt(jListElems.getSelectedIndex()));
+                jTextFieldProof.setText(""+tree.getProof(jListElems.getSelectedIndex()));
+            }                        
         }
         });
         jListElems.setSelectedIndex(0);
