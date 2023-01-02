@@ -210,7 +210,6 @@ public class MerkleTree implements Serializable{
         int lvl = 0;
         int rightChild;
         int leftChild;
-        String hash;
         
         if (idx % 2 == 0) { // leaf is left node, add right node
             try {
