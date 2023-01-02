@@ -17,6 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.ListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -42,6 +45,19 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
             Logger.getLogger(MerkleTreeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         updateJList();
+        
+        //Everytime a value is selected from the JList it updates the text fields with that respective value
+        jListElems.addListSelectionListener(new ListSelectionListener() {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            ListModel<String> model = jListElems.getModel();
+            jTextFieldElem.setText(model.getElementAt(jListElems.getSelectedIndex()));
+            jTextFieldElemProve.setText(model.getElementAt(jListElems.getSelectedIndex()));
+            jTextFieldProof.setText(""+tree.getProof(jListElems.getSelectedIndex()));            
+        }
+        });
+        jListElems.setSelectedIndex(0);
         
     }
     
@@ -113,6 +129,8 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
         jButtonAlterar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jTextFieldElem = new javax.swing.JTextField();
+        jTextFieldElemProve = new javax.swing.JTextField();
+        jTextFieldProof = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -220,23 +238,34 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldElem, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(jTextFieldElem, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jTextFieldElemProve.setEditable(false);
+        jTextFieldElemProve.setBorder(javax.swing.BorderFactory.createTitledBorder("Elemento"));
+        jTextFieldElemProve.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        jTextFieldProof.setBorder(javax.swing.BorderFactory.createTitledBorder("Prova"));
+        jTextFieldProof.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jTextFieldElemProve, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldProof)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -245,9 +274,13 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE))
+                    .addComponent(jTextFieldElemProve, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(jTextFieldProof))
                 .addContainerGap())
         );
 
@@ -381,5 +414,7 @@ public class MerkleTreeGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextAreaMerkleTree;
     private javax.swing.JTextField jTextFieldElem;
+    private javax.swing.JTextField jTextFieldElemProve;
+    private javax.swing.JTextField jTextFieldProof;
     // End of variables declaration//GEN-END:variables
 }
