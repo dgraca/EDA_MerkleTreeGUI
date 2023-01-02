@@ -6,15 +6,16 @@ Merkle Tree "Explorer" for the class of EDA (Algorithms and Data Structures)
 ### Basic solution (up to 14/20)
 - Build a M. tree from elements given by user ✔
 - Add, modify or delete elements ✔
-- - rebuilding entire tree when adding/modifying/deleting elements ✔
-- - rebuilding tree only the nodes that needs to be changed ❌
+- - adding elements dynamically ❌
+- - modifying elements dynamically ✔
+- - removing elements dynamically ❌
 - View the M. tree in text format ✔
 - - View the M. tree aligned to the right ✔
 - - View the M. tree with dynamic spacings (as triangle) ❌
 
 ### Intermidiate solution (up to 16/20)
 - Basic solution ✔
-- Prove that an element belongs to the M. tree ✔
+- Prove that an element belongs to the M. tree ✔/❌ (cannot prove an non-existing element)
 - Save and/or load a tree from disk ✔
 
 ### Advanced solution (up to 18/20)
